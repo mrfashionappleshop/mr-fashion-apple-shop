@@ -1,0 +1,284 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MR FASHION APPLE SHOP</title>
+<style>
+:root{--gold:#b58b3b;--black:#111;--white:#fff;--gray:#f5f5f5}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#fff;color:var(--black)}
+header{background:#111;color:white;padding:22px 5%;text-align:center}
+header h1{font-size:25px;margin:0;letter-spacing:1px}
+header p{color:#d6b66f;margin:9px 0 0}
+nav{background:#fff;padding:13px;text-align:center;border-bottom:1px solid #ddd;position:sticky;top:0;z-index:5}
+nav a{color:#111;text-decoration:none;margin:0 10px;font-size:14px}
+.hero{background:#111;color:white;text-align:center;padding:55px 18px}
+.hero h2{font-size:34px;margin:0 0 12px}
+.hero p{color:#ddd;line-height:1.6}
+.gold{color:#d6b66f}
+.btn{background:var(--gold);color:#111;border:0;padding:12px 20px;border-radius:5px;font-weight:bold;cursor:pointer}
+main{max-width:1150px;margin:auto;padding:25px 15px}
+.notice{background:#f7f1e5;padding:15px;border-left:4px solid var(--gold);line-height:1.6;margin-bottom:22px}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}
+input,select{padding:13px;border:1px solid #ccc;border-radius:5px;font-size:15px}
+#search{flex:1;min-width:190px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:15px}
+.product{border:1px solid #e2e2e2;border-radius:8px;padding:17px;background:white}
+.product h3{font-size:17px;margin:0 0 10px}
+.price{font-size:21px;font-weight:bold;color:#9a742d;margin:12px 0}
+.detail{color:#666;font-size:13px;min-height:20px}
+.product button{width:100%;margin-top:8px}
+.section-title{margin-top:35px;border-bottom:2px solid var(--gold);padding-bottom:10px}
+.cart{background:#f5f5f5;padding:18px;border-radius:8px;margin-top:30px}
+.cart-item{padding:8px 0;border-bottom:1px solid #ddd}
+footer{background:#111;color:white;text-align:center;padding:30px 15px;margin-top:40px;line-height:1.8}
+footer a{color:#e2c17a}
+small{color:#777}
+</style>
+</head>
+<body>
+
+<header>
+<h1>MR FASHION APPLE SHOP</h1>
+<p>Your Trusted Apple & Electronics Store</p>
+</header>
+
+<nav>
+<a href="#shop">Shop</a>
+<a href="#installment">Installment</a>
+<a href="#branches">Our Shops</a>
+<a href="#cart">Cart (<span id="cartCount">0</span>)</a>
+</nav>
+
+<section class="hero">
+<h2>Quality Products. <span class="gold">Flexible Payments.</span></h2>
+<p>Shop iPhones, Samsung, Google Pixel and accessories.<br>
+Visit our branches or order online.</p>
+<a href="#shop"><button class="btn">EXPLORE PRODUCTS</button></a>
+</section>
+
+<main>
+<div class="notice">
+<strong>IMPORTANT SHOP INFORMATION</strong><br>
+All prices are in Ghana cedis (GH₵) and are based on the price list supplied by the shop. Stock and prices must be confirmed before payment. UK, brand new, open-box, active and non-active descriptions are retained where supplied.<br>
+<strong>Battery health: 88% and above where applicable.</strong><br>
+Swapping is allowed. Installment is available on eligible products.
+</div>
+
+<h2 id="shop" class="section-title">Our Products</h2>
+<div class="controls">
+<input id="search" placeholder="Search phone or model..." oninput="render()">
+<select id="category" onchange="render()">
+<option value="All">All products</option>
+<option value="iPhone">iPhone</option>
+<option value="Samsung">Samsung</option>
+<option value="Pixel">Google Pixel</option>
+<option value="Accessories">Accessories</option>
+</select>
+<select id="sort" onchange="render()">
+<option value="default">Sort by</option>
+<option value="low">Price: Low to high</option>
+<option value="high">Price: High to low</option>
+</select>
+</div>
+<div id="products" class="grid"></div>
+
+<section id="installment">
+<h2 class="section-title">Flexible Installment Plans</h2>
+<div class="notice">
+<strong>12-week plan:</strong> 40% deposit, then remaining balance × 1.5 ÷ 12, paid weekly.<br><br>
+<strong>24-week plan:</strong> 40% deposit, then remaining balance × 1.8 ÷ 24, paid every two weeks.<br><br>
+These are the shop's supplied calculation rules. Final approval is subject to the shop's review.
+</div>
+<p>Customers can enquire about installment eligibility when ordering. Identity verification and guarantor details are required during the formal application process.</p>
+</section>
+
+<section id="cart" class="cart">
+<h2>Your Shopping Cart</h2>
+<div id="cartItems">Your cart is empty.</div>
+<h3 id="total">Total: GH₵0</h3>
+<button class="btn" onclick="checkout()">Request Order on WhatsApp</button>
+<p><small>Order requests require the shop's official WhatsApp number to be configured.</small></p>
+</section>
+
+<section id="branches">
+<h2 class="section-title">Visit Our Shops</h2>
+<p><strong>Takoradi:</strong> Market Circle</p>
+<p><strong>Tarkwa:</strong> Donpem</p>
+<p><strong>Asankrangwa:</strong> Opposite Ghana Immigration Office</p>
+</section>
+</main>
+
+<footer>
+<h2>MR FASHION APPLE SHOP</h2>
+Your Trusted Apple & Electronics Store<br>
+Takoradi | Tarkwa | Asankrangwa<br>
+Quality Products. Flexible Payments. Trusted Service.
+</footer>
+
+<script>
+const raw = [
+["iPhone","iPhone 17 Pro Max 512GB","20000","Non-active"],
+["iPhone","iPhone 17 Pro Max 512GB","19000","Active CC 0–10"],
+["iPhone","iPhone 17 Pro Max 256GB","17700","Non-active"],
+["iPhone","iPhone 17 Pro Max 256GB","16600","Active CC 0"],
+["iPhone","iPhone 16 Pro Max 512GB","12500","Open box"],
+["iPhone","iPhone 16 Pro Max 256GB","11600","UK"],
+["iPhone","iPhone 16 256GB","8900","Brand new"],
+["iPhone","iPhone 16 128GB","8600","Non-active"],
+["iPhone","iPhone 16 128GB","8000","Active CC 0, new"],
+["iPhone","iPhone 16 128GB","7500","UK"],
+["iPhone","iPhone 15 Pro Max 512GB","9000","UK"],
+["iPhone","iPhone 15 Pro Max 256GB","8650","UK"],
+["iPhone","iPhone 15 Pro 256GB","7650","UK"],
+["iPhone","iPhone 15 128GB","5800","UK"],
+["iPhone","iPhone 14 Pro Max 512GB","7200","UK"],
+["iPhone","iPhone 14 Pro Max 256GB","7000","UK"],
+["iPhone","iPhone 14 Pro Max 128GB","6650","UK"],
+["iPhone","iPhone 14 Pro 256GB","6200","UK, boxed"],
+["iPhone","iPhone 14 Pro 256GB","6100","UK"],
+["iPhone","iPhone 14 Pro 128GB","5850","UK"],
+["iPhone","iPhone 14 Plus 128GB","5000","UK"],
+["iPhone","iPhone 14 256GB","4200","UK"],
+["iPhone","iPhone 14 128GB","3900","UK"],
+["iPhone","iPhone 13 Pro Max 256GB","5500","UK"],
+["iPhone","iPhone 13 Pro Max 128GB","4900","UK"],
+["iPhone","iPhone 13 Pro 256GB","4700","UK"],
+["iPhone","iPhone 13 Pro 128GB","4500","UK"],
+["iPhone","iPhone 13 256GB","3700","UK"],
+["iPhone","iPhone 13 128GB","3500","UK"],
+["iPhone","iPhone 12 Pro Max 256GB","4100","UK"],
+["iPhone","iPhone 12 Pro Max 128GB","3900","UK"],
+["iPhone","iPhone 12 Pro 256GB","3450","UK"],
+["iPhone","iPhone 12 Pro 128GB","3300","UK"],
+["iPhone","iPhone 12 128GB","2800","UK"],
+["iPhone","iPhone 12 64GB","2400","UK"],
+["iPhone","iPhone 11 Pro Max 256GB","3100","UK"],
+["iPhone","iPhone 11 Pro Max 64GB","2750","UK"],
+["iPhone","iPhone 11 Pro 512GB","2950","UK"],
+["iPhone","iPhone 11 Pro 256GB","2850","UK"],
+["iPhone","iPhone 11 Pro 64GB","2500","UK"],
+["iPhone","iPhone 11 128GB","2400","UK"],
+["iPhone","iPhone 11 64GB","2200","UK"],
+["iPhone","iPhone XS Max 256GB","2500",""],
+["iPhone","iPhone XR 128GB","2000","UK"],
+["iPhone","iPhone XR 64GB","1750","UK"],
+["iPhone","iPhone X 256GB","1600","UK"],
+["iPhone","iPhone SE 2 128GB","1400",""],
+["iPhone","iPhone SE 2 64GB","1300",""],
+["iPhone","iPhone 7 Plus 128GB","1200","UK"],
+["iPhone","iPhone 7 32GB","700","UK"],
+["iPhone","iPhone SE 1 32GB","620","UK"],
+["iPhone","iPad A16 11th Gen 128GB","5900",""],
+
+["Samsung","Samsung S25 Ultra 256GB","11500","New"],
+["Samsung","Samsung S24 Ultra 256GB","9000",""],
+["Samsung","Samsung S4+ 256GB","6400","As supplied"],
+["Samsung","Samsung S24 256GB","5700",""],
+["Samsung","Samsung S23 Ultra 256GB","6700",""],
+["Samsung","Samsung S23+ 256GB","4300",""],
+["Samsung","Samsung S23 256GB","3750",""],
+["Samsung","Samsung S23 128GB","3550",""],
+["Samsung","Samsung S22 Ultra 256GB","4650",""],
+["Samsung","Samsung S22 Ultra 128GB","4100",""],
+["Samsung","Samsung S22+ 256GB","3200",""],
+["Samsung","Samsung S22+ 128GB","3000",""],
+["Samsung","Samsung S22 256GB","3050",""],
+["Samsung","Samsung S22 128GB","2800",""],
+["Samsung","Samsung S21 Ultra 256GB","3800",""],
+["Samsung","Samsung S21 Ultra 128GB","3400",""],
+["Samsung","Samsung S21+ 256GB","2700",""],
+["Samsung","Samsung S21+ 128GB","2500",""],
+["Samsung","Samsung S21 256GB","2550",""],
+["Samsung","Samsung S21 128GB","2350",""],
+["Samsung","Samsung S21 FE 128GB","1800",""],
+["Samsung","Samsung S20 Ultra 128GB","2800",""],
+["Samsung","Samsung S20+ 256GB","2100",""],
+["Samsung","Samsung S20 256GB","2000",""],
+["Samsung","Samsung S20 FE 128GB","1700",""],
+["Samsung","Samsung Note 20 Ultra 128GB","3450",""],
+["Samsung","Samsung Note 20 128GB","2350",""],
+["Samsung","Samsung Note 10+ 256GB","2650",""],
+["Samsung","Samsung Note 10 256GB","2250",""],
+["Samsung","Samsung Note 9 128GB","1850",""],
+["Samsung","Samsung S10+ 256GB","2550",""],
+["Samsung","Samsung S10+ 128GB","2450",""],
+["Samsung","Samsung S10 128GB","2150",""],
+["Samsung","Samsung S10e 128GB","1750",""],
+["Samsung","Samsung S9+ 128/64GB","1750",""],
+["Samsung","Samsung S9 128/64GB","1500",""],
+["Samsung","Samsung S8+ 64GB","1550",""],
+["Samsung","Samsung S8 64GB","1350","Dual SIM"],
+["Samsung","Samsung S7 Edge 32/64GB","900",""],
+["Samsung","Samsung S7 32GB","700",""],
+["Samsung","Samsung S6 Edge 32GB","650",""],
+["Samsung","Samsung S6 32GB","500",""],
+["Samsung","Samsung A07 128GB / 6GB RAM","1450",""],
+["Samsung","Samsung A06 128GB / 6GB RAM","1250",""],
+
+["Pixel","Google Pixel 9 Pro XL 256GB","8150",""],
+["Pixel","Google Pixel 9 Pro 256GB","7500",""],
+["Pixel","Google Pixel 9 128GB","6660",""],
+["Pixel","Google Pixel 8 Pro 128GB","4650",""],
+["Pixel","Google Pixel 8 128GB","3650",""],
+["Pixel","Google Pixel 7 Pro 128GB","3650",""],
+["Pixel","Google Pixel 7 128GB","2750",""],
+["Pixel","Google Pixel 7a 128GB","2500",""],
+["Pixel","Google Pixel 6 Pro 128GB","3200",""],
+["Pixel","Google Pixel 6 128GB","2250",""],
+["Pixel","Google Pixel 6a 128GB","2050",""],
+
+["Accessories","iPad A16 11th Gen 128GB","5900",""],
+["Accessories","Original USB-C to USB-C Cable","100",""],
+["Accessories","Original USB-C to iPhone Cable","100",""],
+["Accessories","Original Nokia 106 / 105 4G","150",""],
+["Accessories","Original 10kW Wireless MagSafe Charger","200",""]
+];
+
+let cart=[];
+const products=raw.map((p,i)=>({id:i,cat:p[0],name:p[1],price:Number(p[2]),detail:p[3]}));
+
+function money(n){return "GH₵"+n.toLocaleString("en-GH")}
+function render(){
+ const q=document.getElementById("search").value.toLowerCase();
+ const cat=document.getElementById("category").value;
+ let list=products.filter(p=>(cat==="All"||p.cat===cat)&&
+ (p.name+" "+p.detail).toLowerCase().includes(q));
+ const sort=document.getElementById("sort").value;
+ if(sort==="low")list.sort((a,b)=>a.price-b.price);
+ if(sort==="high")list.sort((a,b)=>b.price-a.price);
+ document.getElementById("products").innerHTML=list.map(p=>`
+ <article class="product">
+ <h3>${p.name}</h3>
+ <div class="detail">${p.detail||"Please confirm product details"}</div>
+ <div class="price">${money(p.price)}</div>
+ <small>${p.cat}</small>
+ <button class="btn" onclick="add(${p.id})">Add to Cart</button>
+ </article>`).join("")||"<p>No matching products found.</p>";
+}
+function add(id){
+ cart.push(products.find(p=>p.id===id));
+ updateCart();
+}
+function updateCart(){
+ document.getElementById("cartCount").textContent=cart.length;
+ document.getElementById("cartItems").innerHTML=cart.length?
+ cart.map((p,i)=>`<div class="cart-item">${p.name} — ${money(p.price)}
+ <button onclick="removeItem(${i})">Remove</button></div>`).join("")
+ :"Your cart is empty.";
+ document.getElementById("total").textContent="Total: "+money(cart.reduce((s,p)=>s+p.price,0));
+}
+function removeItem(i){cart.splice(i,1);updateCart()}
+function checkout(){
+ if(!cart.length){alert("Your cart is empty.");return}
+ const order=cart.map(p=>p.name+" - "+money(p.price)).join("\n");
+ const total=money(cart.reduce((s,p)=>s+p.price,0));
+ alert("Your order:\n"+order+"\nTotal: "+total+
+ "\n\nPlease contact the shop to confirm stock and arrange payment. WhatsApp ordering will be activated after the official shop number is added.");
+}
+render();
+</script>
+</body>
+</html>
