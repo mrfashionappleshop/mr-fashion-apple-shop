@@ -250,7 +250,12 @@ function render(){
  if(sort==="low")list.sort((a,b)=>a.price-b.price);
  if(sort==="high")list.sort((a,b)=>b.price-a.price);
  document.getElementById("products").innerHTML=list.map(p=>`
- <article class="product">
+ <article class="product"><img
+  src="https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=800&q=85"
+  alt="Phone product"
+  style="width:100%;height:200px;object-fit:contain;background:#fff;border-radius:10px;margin-bottom:15px"
+  loading="lazy"
+>
  <h3>${p.name}</h3>
  <div class="detail">${p.detail||"Please confirm product details"}</div>
  <div class="price">${money(p.price)}</div>
